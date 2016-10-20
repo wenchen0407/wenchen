@@ -1,0 +1,35 @@
+// partition
+
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        if(nums==null || nums.length==0) return -1;
+        if(nums.length==1) return nums[0];
+        return partition(k, 0, nums.length-1, nums);
+    }
+    
+    public int partition(int k, int begin, int end, int nums[]){
+        int big=begin;
+        
+        int pivot=nums[end];
+        
+        for(int i=begin; i<end; i++){
+            if(nums[i] > pivot){
+                swap(nums, i, big);
+                big++;
+            }
+            
+        }
+        swap(nums, big, end);
+        
+        int length=big-begin+1;
+        if(length==k) return nums[big];
+        else if(length<k) return partition(k-length, big+1, end, nums);
+        else return partition(k, begin, big-1, nums);
+    }
+    
+    public void swap(int nums[], int i, int j){
+        int temp = nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
+    }
+}
