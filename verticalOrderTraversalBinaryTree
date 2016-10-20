@@ -1,0 +1,58 @@
+public class Solution {
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        
+        if(root==null) return res;
+        
+        Map<TreeNode, Integer> indexMap = new HashMap<TreeNode, Integer>();
+        
+        Map<Integer, List<Integer>> resMap = new HashMap<Integer, List<Integer>>();
+        
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        
+        queue.offer(root);
+        indexMap.put(root, 0);
+
+        int maxIndex=0;
+        int minIndex=0;
+        
+        while(queue.size()!=0){
+            int len = queue.size();
+            for(int i=0; i<len; i++){
+                TreeNode node = queue.poll();
+                int index=indexMap.get(node);
+                
+                if(resMap.containsKey(index)){
+                    List<Integer> list = resMap.get(index);
+                    list.add(node.val);
+                    resMap.put(index, list);
+                }else{
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(node.val);
+                    resMap.put(index, list);
+                }
+                
+                if(node.left!=null){
+                    indexMap.put(node.left, index-1); 
+                    queue.offer(node.left);
+                    
+                    if(index-1<minIndex) minIndex=index-1;
+                }
+                if(node.right!=null){
+                    indexMap.put(node.right, index+1); 
+                    queue.offer(node.right);
+                    if(index+1>maxIndex) maxIndex=index+1;
+                }
+            }
+        }
+        
+       
+        
+        for(int i=minIndex; i<=maxIndex; i++){
+            res.add(resMap.get(i));
+        }
+        
+        return res;
+        
+    }
+}
