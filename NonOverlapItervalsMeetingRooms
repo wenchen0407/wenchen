@@ -1,0 +1,60 @@
+public class Solution {
+    public int minMeetingRooms(Interval[] intervals) {
+        // O(nlogn)
+        
+        if(intervals == null || intervals.length==0){
+            return 0;
+        }
+        
+        Arrays.sort(intervals, new Comparator<Interval>(){
+            public int compare(Interval a, Interval b){
+                return a.start-b.start;
+            }
+        });
+        
+        PriorityQueue<Interval> heap = new PriorityQueue<Interval>(intervals.length, new Comparator<Interval>(){
+            public int compare(Interval a, Interval b){
+                return a.end-b.end;
+            }
+        });
+        
+        heap.offer(intervals[0]);
+        
+        for(int i=1; i<intervals.length; i++){
+            Interval item = heap.poll();
+            if(item.end <= intervals[i].start){
+                item.end = intervals[i].end;
+            }else{
+                heap.offer(intervals[i]);
+            }
+            
+            heap.offer(item);
+        }
+        
+        return heap.size();
+        
+        /* O(n^2)
+        if(intervals==null || intervals.length == 0) return 0;
+        Arrays.sort(intervals, new Comparator<Interval>(){
+            public int compare(Interval a, Interval b){
+                return a.start-b.start;   
+            }
+        });
+        List<Interval> newIntervals = new ArrayList<Interval>();
+        newIntervals.add(intervals[0]);
+        for(int i=1; i<intervals.length; i++){
+            boolean exist=false;
+            for(Interval newInt: newIntervals){
+                if(newInt.end<=intervals[i].start){
+                    newInt.end = intervals[i].end;
+                    exist=true;
+                    break;
+                }
+            }
+            if(!exist) newIntervals.add(intervals[i]);
+        }
+        
+        return newIntervals.size();*/
+        
+    }
+}
