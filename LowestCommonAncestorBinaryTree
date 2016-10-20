@@ -16,5 +16,56 @@ public class Solution {
     }
     
     
+    // another thought: two paths of p and q
+    
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        
+        
+        if(root == null) return null;
+        List<List<TreeNode>> res = new ArrayList<List<TreeNode>>();
+        List<TreeNode> ele = new ArrayList<TreeNode>();
+        
+        rec(root, p, q, ele, res);
+        if(res.size() == 1){
+            
+            List<TreeNode> l= res.get(0);
+            
+            return l.get(l.size()-1);
+            
+        }else{
+            List<TreeNode> l1=res.get(0);
+            List<TreeNode> l2=res.get(1);
+            
+            for(int i=l1.size()-1; i>=0; i--) if(l2.contains(l1.get(i))) return l1.get(i);
+        
+        }
+        return null;
+    }
+    
+    public void rec(TreeNode root, TreeNode p, TreeNode q, List<TreeNode> ele, List<List<TreeNode>> res){
+        if(root==p || root==q){
+            List<TreeNode> newEle = new ArrayList(ele);
+            newEle.add(root);
+            res.add(newEle);
+            return;
+        }
+        
+        if(root.left!=null){
+            ele.add(root);
+            rec(root.left, p, q, ele, res);
+            ele.remove(ele.size()-1);
+            
+        }
+        
+        if(root.right!=null){
+            ele.add(root);
+            rec(root.right, p, q, ele, res);
+            ele.remove(ele.size()-1);
+            
+        }
+        
+    }
+    
+    
     
   }
