@@ -1,0 +1,19 @@
+public class Solution {
+    public double myPow(double x, int n) {
+       
+       if(n>=0) return helper(x, (long)n);
+       else {
+           return helper(1/x, (long)n*(-1));
+       }
+        
+    }
+    
+    public double helper(double x, long n){
+        if(n==0) return 1;
+        if(n==2) return x*x;
+        
+        double half=helper(x,n/2);
+        if(n%2==1) return x*half*half;
+        else return half*half;
+    }
+}
