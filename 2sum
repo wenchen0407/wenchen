@@ -1,0 +1,65 @@
+ public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+ 
+     /********************* One pass Time: O(nlogn), space: O(n)  Return value ************************/
+        Arrays.sort(nums);
+        int[] res = new int[2];
+        int i=0; 
+        int j=nums.length-1;
+        
+        while(i<j){
+            if(nums[i]+nums[j]>target) j--;
+            else if(nums[i]+nums[j]<target) i++;
+            else{
+                res[0]=i;
+                res[1]=j;
+                return res;
+            }
+        }
+        return res;
+ 
+ 
+ 
+ /*********************Two pass Time: O(n), space: O(n) Return index ************************/
+        
+        int[] res = new int[2];
+        int i=0; 
+        int j=nums.length-1;
+        
+        Map<Integer, Integer> arrMap = new HashMap<Integer, Integer>();
+        for(i=0; i<nums.length; i++){
+            arrMap.put(nums[i], i);
+        }
+        
+        for(i=0; i<nums.length; i++){
+            Integer index = arrMap.get(target-nums[i]);
+            if(index!=null&&index!=i){
+                res[0]=i;
+                res[1]=index;
+            }
+        }
+        
+        return res;
+        
+      /*********************One pass Time: O(n), space: O(n) Return index ************************/  
+      int[] res = new int[2];
+      if(nums==null || nums.length==0){
+        return res;
+      }
+    
+      Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+      
+      for(int i=0; i<nums.length; i++){
+        if(map.containsKey(target-nums[i])){
+          res[0]=map.get(target-nums[i]);
+          res[1]=i;
+        }
+        
+        map.put(nums[i], i);
+        
+      }
+      
+      return res;
+        
+    }
+}
