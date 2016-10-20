@@ -1,0 +1,57 @@
+public class Solution {
+    
+    //iterative solution
+    public List<List<Integer>> subsets(int[] nums){
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        
+        if(nums==null || nums.length==0) return res;
+        
+        for(int value: nums){
+            int size=res.size();
+            if(size==0){
+                res.add(new ArrayList<Integer>(Arrays.asList(value)));
+            }else{
+
+                
+                for(int i=0; i<size; i++){
+                    
+                    List<Integer> newitem = new ArrayList<Integer>(res.get(i));
+                    newitem.add(value);
+                    res.add(newitem);
+                }
+                res.add(new ArrayList<Integer>(Arrays.asList(value)));
+            }
+            
+            
+            
+        }
+        
+        res.add(new ArrayList<Integer>());
+        
+        return res;
+    }
+    
+    
+    
+    /* Recursive solution
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        List<Integer> ele = new ArrayList<Integer>();
+        recursive(nums, ele, res, 0);
+        return res;
+    }
+    
+    public void recursive(int[] nums, List<Integer> ele, List<List<Integer>> res, int index){
+
+        if(index>=nums.length) {res.add(new ArrayList(ele)); return;}
+        
+        // not include nums[index]
+        recursive(nums, ele, res, index+1);
+        
+        // include nums[index]
+        ele.add(nums[index]);
+        recursive(nums, ele, res, index+1);
+        ele.remove(ele.size()-1);
+
+    }*/
+}
