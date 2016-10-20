@@ -1,0 +1,70 @@
+public class Solution {
+    /* Recursive solution
+    
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        List<Integer> element = new ArrayList<Integer>();
+        helper(nums, element, res, 0);
+        return res;
+    }
+    
+    
+    public void helper(int[] nums, List<Integer> element, List<List<Integer>> res, int i){
+        res.add(new ArrayList(element);
+        
+        if(i>= nums.length) return;
+
+        int index=i;
+        while(index < nums.length){
+            element.add(nums[index]);
+            helper(nums, element, res, index+1);
+            element.remove(element.size()-1);
+            
+            while(index+1<nums.length && nums[index] == nums[index+1]) index++;
+            
+            index++;
+        }
+        
+    }*/
+    
+    // Iterative Solution
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        
+        if(nums==null || nums.length==0) return res;
+        
+        Arrays.sort(nums);
+    
+                    
+        for(int i=0; i<nums.length; i++){
+            int value=nums[i];
+            int size=res.size();
+            if(size==0){
+                res.add(new ArrayList<Integer>(Arrays.asList(value)));
+            }else{
+
+                
+                for(int j=0; j<size; j++){
+                    
+                    List<Integer> newitem = new ArrayList<Integer>(res.get(j));
+                    newitem.add(value);
+                    if(!res.contains(newitem)){
+                        res.add(newitem);
+                    }
+                }
+                List<Integer> newitem = new ArrayList<Integer>(Arrays.asList(value));
+                if(!res.contains(newitem)){
+                    res.add(newitem);
+                }
+        
+            }
+            
+            
+            
+        }
+        
+        res.add(new ArrayList<Integer>());
+        
+        return res;   
+    }
