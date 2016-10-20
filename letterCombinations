@@ -1,0 +1,64 @@
+public class Solution {
+    
+    public List<String> letterCombinations(String digits) {
+       // recursive algorithm
+       
+       String[] map = {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+       List<String> res = new ArrayList<String>();
+       if(digits.length()==0){return res;}
+       
+       recursive(map, digits, new StringBuilder(), res, 0);
+       
+       return res; 
+    }
+    
+    public void recursive(String[] map, String digits, StringBuilder str, List<String> res, int index){
+        if(index == digits.length() && str.length()>0){
+            res.add(str.toString());
+            return;
+        }
+        
+        String currStr = map[digits.charAt(index)-'0'];
+        
+        for(int i=0; i<currStr.length(); i++){
+            str.append(Character.toString(currStr.charAt(i)));
+            recursive(map, digits, str, res, index+1);
+            str.deleteCharAt(str.length()-1);
+        }
+        
+    }
+    
+    /************************ Iterative algorithm ********************/
+    
+    public List<String> letterCombinations(String digits){
+         
+        List<String> res = new ArrayList<String>();
+        String[] mapping = {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        Queue<String> queue = new LinkedList<String>();
+        for(int i=0; i<digits.length(); i++){
+            String map = mapping[digits.charAt(i)-'0'];
+
+            if(i==0){
+                for(int j=0; j<map.length(); j++){
+                    queue.offer(Character.toString(map.charAt(j)));
+                }
+            }else{
+                int queue_size=queue.size();
+                for(int k=0; k<queue_size; k++){
+                    String oldstr=queue.poll();
+                    for(int j=0; j<map.length(); j++){
+                        queue.offer(oldstr+map.charAt(j));
+                    }
+                }
+            }
+        }
+        
+        while(queue.size()>0){
+            res.add(queue.poll());
+        }
+        
+        return res;
+    
+    }
+    
+}
