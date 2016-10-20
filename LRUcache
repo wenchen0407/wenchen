@@ -1,0 +1,72 @@
+//Double linkedlist + HashMap solution
+public class LRUCache {
+    int maxSize = 0;
+    int currentSize = 0;
+    HashMap<Integer, ListNode> map = new HashMap<Integer, ListNode>(); 
+    ListNode dummyNode;
+    ListNode end;
+    public LRUCache(int capacity) {
+        dummyNode = new ListNode();
+        end = dummyNode;
+        maxSize = capacity;
+    }
+    
+    public int get(int key) {
+       ListNode node = getNode(key);
+       if(node == null) return -1;
+       else return node.val;
+    }
+    
+    public ListNode getNode(int key) {
+       ListNode node = null;
+       if(map.containsKey(key)) {
+         node = map.get(key);
+         if(node != end) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+            node.next = null;
+            node.prev = end;
+            end.next = node;
+            end = node;
+         }
+       }
+       return node;
+    }
+    
+    public void set(int key, int value) {
+        ListNode node = getNode(key);
+        if(node == null) {
+            node = new ListNode(key, value);
+            map.put(key, node);
+            end.next = node;
+            node.prev = end;
+            end = node;
+            if(currentSize == maxSize) {
+                if(dummyNode.next != null) {
+                    if(dummyNode.next == end) end = dummyNode;
+                    int k = dummyNode.next.key;
+                    map.remove(k);
+                    dummyNode.next = dummyNode.next.next;
+                    if(dummyNode.next != null) dummyNode.next.prev = dummyNode;
+                }
+            } else {
+                currentSize ++;
+            }
+        } else {
+            map.get(key).val = value;
+        }
+    }
+}
+
+class ListNode {
+    int key;
+    int val;
+    ListNode next;
+    ListNode prev;
+    
+    ListNode()  {}
+    ListNode(int key, int val) {
+        this.key = key;
+        this.val = val;
+    }
+}
