@@ -1,0 +1,20 @@
+public TreeNode asDoublyLinkedList(TreeNode root){
+		if(root.leftChild == null && root.rightChild == null){
+			return root;
+		}
+		else {
+			TreeNode tmp = null;
+			tmp = asDoublyLinkedList(root.leftChild);
+			while(tmp.rightChild != null)
+				tmp = tmp.rightChild;
+			tmp.rightChild = root;
+			root.leftChild = tmp;
+			tmp = asDoublyLinkedList(root.rightChild);
+			while(tmp.leftChild != null)
+				tmp = tmp.leftChild;
+			tmp.leftChild = root;
+			root.rightChild = tmp;
+		}
+		
+		return root;
+	}
