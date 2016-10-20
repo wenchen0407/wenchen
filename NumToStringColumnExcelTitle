@@ -1,0 +1,13 @@
+public class Solution {
+    public String convertToTitle(int n) {
+        StringBuilder str = new StringBuilder();
+        
+        while(n>0){
+            int remain=(n-1)%26;
+            n = (n-1)/26;
+            str.append((char)(65+remain));
+        }
+        
+        return str.reverse().toString();
+    }
+}
