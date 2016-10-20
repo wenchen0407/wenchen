@@ -1,0 +1,56 @@
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        /***** recursive method *****/
+        
+        if(root==null) return "null ";
+
+        return Integer.toString(root.val)+" "+serialize(root.left)+serialize(root.right);
+        
+        
+        /***** iterative method *****/
+        StringBuilder sb = new StringBuilder();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        
+        if(root==null) return "null";
+        TreeNode node = root;
+        
+        while(stack.size()>0 || node!=null){
+            //TreeNode node = stack.pop();
+            if(node!=null){
+                stack.push(node);
+                sb.append(node.val+" ");
+                node=node.left;
+                
+            }else{
+                sb.append("null ");
+                TreeNode p = stack.pop();
+                node = p.right;
+            }
+        }
+        
+        return sb.toString();
+        
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        int[] start={0};
+        String[] strs = data.split(" ");
+        return deRecur(strs, start);
+    }
+    
+    public TreeNode deRecur(String[] data, int[] start){
+        if(start[0]>=data.length || data[start[0]].equals("null")) {start[0]++; return null;}
+        
+        TreeNode root = new TreeNode(Integer.valueOf(data[start[0]]));
+        start[0]++;
+        TreeNode left = deRecur(data, start);
+        TreeNode right = deRecur(data, start);
+        
+        root.left = left;
+        root.right= right;
+        return root;
+    }
+}
