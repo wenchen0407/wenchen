@@ -1,0 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    
+    public List<String> binaryTreePaths(TreeNode root){
+        //StringBuilder path = new StringBuilder();
+        String path = "";
+        List<String> paths = new ArrayList<String>();
+        if(root == null) return paths;
+        binaryTreePathsRecursive(root, path, paths);
+        return paths;
+    }
+    
+    /*private void binaryTreePathsRecursive(TreeNode root, StringBuilder path, List<String> paths){
+        
+        if(root.right == null && root.left==null){
+            path.append(root.val);
+            paths.add(path.toString());
+            return;
+        }
+        
+        path.append(root.val);
+        path.append("->");
+        
+        if(root.left!=null){
+            binaryTreePathsRecursive(root.left, new StringBuilder(path), paths);
+            
+        } 
+        
+        if(root.right!=null){
+            binaryTreePathsRecursive(root.right, new StringBuilder(path), paths);
+        }
+        
+
+    }*/
+    
+    private void binaryTreePathsRecursive(TreeNode root, String path, List<String> paths){
+        if(root.left==null && root.right==null){
+            path += Integer.toString(root.val);
+            paths.add(path);
+            return;
+        }
+        
+        
+        if(root.left!=null){
+            String newPath = path+Integer.toString(root.val)+"->"; 
+            binaryTreePathsRecursive(root.left, newPath, paths);
+            
+        }
+        
+        if(root.right!=null){
+            String newPath = path + Integer.toString(root.val)+"->"; 
+            binaryTreePathsRecursive(root.right, newPath, paths);
+            
+        }
+    }
+}
