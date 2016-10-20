@@ -1,0 +1,47 @@
+public class Solution {
+    
+    // naive solution: set window size from nums.length to 0
+    /*public int maxSubArrayLen(int[] nums, int k) {
+        int maxlen=nums.length;
+        
+        for(int i=maxlen; i>0; i--){
+            int sum=0;
+            for(int j=0; j<=maxlen-i; j++){
+                if(j==0){
+                    for(int g=j; g<=j+i-1; g++){
+                        sum += nums[g];
+                    }
+                    if(sum == k) return i;
+                }else{
+                    sum -= nums[j-1];
+                    sum += nums[j+i-1];
+                    if(sum == k) return i;
+                }
+            }
+        }
+        
+        return 0;
+    }*/
+    
+    // O(n) solution
+     public int maxSubArrayLen(int[] nums, int k) {
+        for(int i=1; i<nums.length; i++) nums[i] += nums[i-1];
+        
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+        int max=0;
+        map.put(0, -1);
+        
+        for(int i=0; i<nums.length; i++){
+            if(map.containsKey(nums[i]-k)){
+                max = Math.max(max, i-map.get(nums[i]-k));
+            }
+            if(!map.containsKey(nums[i])){
+                map.put(nums[i], i);
+            }
+        }
+        
+        return max;
+        
+    }
+}
