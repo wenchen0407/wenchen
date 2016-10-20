@@ -19,7 +19,7 @@ public class Solution {
             int s2=Integer.valueOf(s.substring(i-2, i));
             
             if(s1>=1 && s1<=9){
-                dp[i]+=dp[i-1];
+                dp[i]=dp[i-1];
             }
             
             if(s2>=10 && s2<=26){
