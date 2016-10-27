@@ -1,0 +1,32 @@
+public class MovingAverage {
+
+    /** Initialize your data structure here. */
+    
+    int curr_size;
+    
+    Queue<Integer> queue;
+    
+    int capacity;
+    
+    double sum;
+    
+    public MovingAverage(int size) {
+        queue = new LinkedList<Integer>();
+        this.capacity = size;
+        curr_size=0;
+        sum = 0;
+    }
+    
+    public double next(int val) {
+        
+        if(curr_size < capacity){
+            curr_size++;
+        }else{
+            sum -= queue.poll();
+        }
+        queue.offer(val);
+        sum += val;
+        
+        return sum/curr_size;
+    }
+}
