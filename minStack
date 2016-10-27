@@ -1,0 +1,35 @@
+public class MinStack {
+
+    /** initialize your data structure here. */
+    
+    //int min;
+    Stack<Integer> stack;
+    PriorityQueue<Integer> heap;
+    
+    public MinStack() {
+        stack = new Stack<Integer>();
+        heap = new PriorityQueue<Integer>();
+    }
+    
+    public void push(int x) {
+        stack.push(x);
+        heap.offer(x);
+    }
+    
+    public void pop() {
+        if(!stack.empty()){
+            heap.remove(stack.peek());
+            stack.pop();
+        }
+        
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        if(heap.size()!=0) return heap.peek();
+        else return -1;
+    }
+}
