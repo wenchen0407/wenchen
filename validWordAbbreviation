@@ -1,0 +1,51 @@
+public class Solution {
+    public boolean validWordAbbreviation(String word, String abbr) {
+        // ont pass Wenchen's solution
+        /*char[] word_arr= word.toCharArray();
+        char[] abbr_arr= abbr.toCharArray();
+        
+        
+        String digit="";
+        int len=0;
+        for(int i=0; i<abbr.length(); i++){
+            if(digit.equals("") && abbr_arr[i] == '0') return false;
+            if(abbr_arr[i]>='0' && abbr_arr[i]<='9'){
+                digit += Character.toString(abbr_arr[i]);
+                if(i==abbr.length()-1) len+=Integer.valueOf(digit);
+            }else{
+                int count=0;
+                if(!digit.equals("")) count = Integer.valueOf(digit);
+                len += count+1;
+                if(len>word.length() || abbr_arr[i] != word_arr[len-1]) return false;
+                digit="";
+            }
+        }
+        
+        if(len == word.length()) return true;
+        else return false;*/
+        
+        
+        // simplified version
+        char[] word_arr= word.toCharArray();
+        char[] abbr_arr= abbr.toCharArray();
+        
+        String digit="";
+        int index=0;
+        int num=0;
+        for(char c: abbr.toCharArray()){
+            if(num==0 && c == '0') return false;
+            if(c>='0' && c<='9'){
+                num = num*10 + (c-'0');
+            }else{
+ 
+                index += num;
+                if(index>=word.length() || c!= word_arr[index]) return false;
+                num=0;
+                index++;
+            }
+        }
+        
+        if(index+num == word.length()) return true;
+        else return false;
+    }
+}
