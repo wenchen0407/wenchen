@@ -1,0 +1,33 @@
+public class Solution {
+    public int lengthLongestPath(String input) {
+        String[] paths = input.split("\n");
+        int result=0;
+        Stack<Integer> stack = new Stack<Integer>();
+        int len=0;
+        
+        for(String str: paths){
+            int depth = findDepth(str);
+            
+            while(depth < stack.size()){
+                len -= stack.pop();
+            }
+            
+            int currlen = str.replaceAll("\t", "").length()+1;
+            len += currlen;
+            
+            if(str.contains(".")){
+                result = Math.max(result, len-1);
+            }
+                
+            stack.push(currlen);
+            
+        }
+        
+        return result;
+    }
+    
+    public int findDepth(String s){
+        String str = s.replaceAll("\t", "");
+        return s.length()-str.length();
+    }
+}
