@@ -1,0 +1,36 @@
+public class Solution {
+    // iterative solution
+    public int closestValue(TreeNode root, double target) {
+        int res=root.val;
+        while(root!=null){
+            if(Math.abs(root.val - target) < Math.abs(target - res)) res = root.val;
+            
+            if(root.val < target) root=root.right;
+            else root=root.left;
+        }
+        
+        return res;
+    }
+    
+    // recursive solution
+    /*public int closestValue(TreeNode root, double target) {
+        if(root == null){
+            if(target <0 ){
+                return Integer.MAX_VALUE;
+            }else{
+                return Integer.MIN_VALUE;
+            }
+        }
+        
+        if(root.val < target){
+            int r=closestValue(root.right, target);
+            if(Math.abs(target-r) < Math.abs(target-root.val)) return r;
+            else return root.val;
+        }else{
+            int l=closestValue(root.left, target);
+            if(Math.abs(l-target) < Math.abs(root.val - target)) return l;
+            else return root.val;
+        }
+        
+    }*/
+    
