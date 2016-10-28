@@ -1,0 +1,53 @@
+public class Solution {
+    
+    public List<String> generatePossibleNextMoves(String s) {
+        List<String> res = new ArrayList<String>();
+        
+        if(s==null || s.length()==0) return res;
+        
+        for(int i=1; i<s.length(); i++){
+            if(s.charAt(i) == '+' && s.charAt(i-1)=='+'){
+                res.add(s.substring(0, i-1)+"--"+s.substring(i+1, s.length()));
+            }
+        }
+        
+        return res;
+        
+    }
+    
+    /* Wenchen's complex solution
+    
+    public List<String> generatePossibleNextMoves(String s) {
+        int begin=0;
+        int end=0;
+        char[] str=s.toCharArray();
+        List<String> res = new ArrayList<String>();
+        for(int i=0; i<s.length(); i++){
+            if(str[i] == '+'){
+               if(i==0 || (i>0 && str[i-1]=='-')) begin=i;
+               end=i;
+            }else{
+                if(end-begin>=1){
+                    for(int j=begin; j<=end-1; j++){
+                        char[] newstr = s.toCharArray();
+                        newstr[j]='-';
+                        newstr[j+1]='-';
+                        res.add(new String(newstr));
+                    }
+                }
+                begin=end;
+            }
+        }
+        
+        if(end-begin>=1){
+            for(int j=begin; j<=end-1; j++){
+                char[] newstr = s.toCharArray();
+                newstr[j]='-';
+                newstr[j+1]='-';
+                res.add(new String(newstr));
+            }
+        }
+        
+        return res;
+    }*/
+}
