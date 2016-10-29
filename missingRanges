@@ -1,0 +1,31 @@
+public class Solution {
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+        List<String> res = new ArrayList<String>();
+        int i=0;
+        int l=lower;
+        for(i=0; i<nums.length; i++){
+            int h=nums[i];
+            
+            if(l < h){
+                String str = helper(l, h-1);
+                if(!str.equals("")) res.add(str);
+            }
+            
+            if(h==Integer.MAX_VALUE) return res;
+            
+            l=h+1;
+        }
+        
+        String str=helper(l, upper);
+        if(!str.equals("")) res.add(str);
+        return res;
+    }
+    
+    public String helper(int low, int high){
+        String str="";
+        if(low == high) str=String.valueOf(low);
+        else if(low < high) str=Integer.toString(low)+"->"+Integer.toString(high);
+        return str;
+    }
+        
+}
