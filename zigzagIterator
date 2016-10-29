@@ -1,0 +1,31 @@
+public class ZigzagIterator {
+    
+    int i;
+    int j;
+    
+    List<Integer> v1;
+    List<Integer> v2;
+
+    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+        this.v1 = v1;
+        this.v2 = v2;
+        i=0;
+        j=0;
+    }
+
+    public int next() {
+        int res=0;
+        if(i<v1.size() && j>=v2.size()){ res = v1.get(i); i++;}
+        else if(i>=v1.size() && j<v2.size()){res = v2.get(j); j++;}
+        else if(i<v1.size() && j<v2.size()){
+            if(i==j){res = v1.get(i); i++;}
+            else if(i>j){res=v2.get(j); j++;}
+        }
+        
+        return res;
+    }
+
+    public boolean hasNext() {
+        return (i<v1.size() || j<v2.size());
+    }
+}
