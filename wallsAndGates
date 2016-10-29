@@ -1,0 +1,57 @@
+public class Solution {
+    public void wallsAndGates(int[][] rooms) {
+        for(int i=0; i<rooms.length; i++){
+            for(int j=0; j<rooms[0].length; j++){
+                if(rooms[i][j]==0){
+                    helper(rooms, i, j);
+                }
+            }
+        }
+    }
+    
+    public void helper(int[][] rooms, int x, int y){
+            Queue<Node> queue = new LinkedList<Node>();
+            queue.offer(new Node(x, y));
+            int dist=0;
+            while(queue.size()>0){
+                int size = queue.size();
+                dist++;
+                
+                // level l
+                for(int k=0; k<size; k++){
+                    Node node = queue.poll();
+                    int i=node.i;
+                    int j=node.j;
+                    if(i>0 && dist<rooms[i-1][j]){
+                        queue.offer(new Node(i-1, j));
+                        rooms[i-1][j]=dist;
+                    }
+                    
+                    if(j>0 && dist < rooms[i][j-1]){
+                        queue.offer(new Node(i, j-1));
+                        rooms[i][j-1]=dist;
+                    }
+                    
+                    if(i<rooms.length-1 && dist < rooms[i+1][j]){
+                        queue.offer(new Node(i+1, j));
+                        rooms[i+1][j]=dist;
+                    }
+                    
+                    if(j<rooms[0].length-1 && dist < rooms[i][j+1]){
+                        queue.offer(new Node(i, j+1));
+                        rooms[i][j+1]=dist;
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    class Node {
+        int i; 
+        int j;
+        Node(int i, int j) {
+            this.i = i;
+            this.j = j;
+    }
+}
