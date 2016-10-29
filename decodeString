@@ -1,0 +1,65 @@
+public class Solution {
+    public String decodeString(String s) {
+        StringBuilder sb = new StringBuilder();
+        
+        Stack<String> strStack = new Stack<String>();
+        Stack<Integer> intStack = new Stack<Integer>();
+        String str="";
+        int i=0;
+        
+        while(i<s.length()){
+            
+            
+            if(s.charAt(i)>='0' && s.charAt(i)<='9'){
+                int num=0;
+                while(s.charAt(i)>='0' && s.charAt(i)<='9'){
+                    num = num*10 + s.charAt(i)-'0';
+                    i++;
+                }
+                
+                intStack.push(num);
+            }else if(s.charAt(i) == '['){
+                i++;
+                str="";
+                while(s.charAt(i)>='a' && s.charAt(i)<='z'){
+                    str += Character.toString(s.charAt(i));
+                    i++;
+                }
+                strStack.push(str);
+                
+            }else if(s.charAt(i)==']'){
+                int k=0;
+                String duplicate="";
+                String ele="";
+                if(!intStack.empty()) k=intStack.pop();
+                if(!strStack.empty()) ele=strStack.pop();
+                for(int j=0; j<k; j++){
+                    duplicate += ele;
+                }
+                if(!strStack.empty()){
+                    String temp = strStack.pop();
+                    temp += duplicate;
+                    strStack.push(temp);
+                }else{
+                    sb.append(duplicate);
+                }
+                i++;
+            }else{
+                
+                if(!strStack.empty()){
+                    String temp = strStack.pop();
+                    temp += s.charAt(i);
+                    strStack.push(temp);
+                }else{
+                    sb.append(s.charAt(i));
+                }
+                i++;
+            }
+            
+            
+            
+        }
+        
+        return sb.toString();
+    }
+}
