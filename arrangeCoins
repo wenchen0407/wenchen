@@ -1,0 +1,14 @@
+public class Solution {
+    public int arrangeCoins(int n) {
+        int res=1;
+        int sum=0;
+        while(sum<n-res){
+            sum += res;
+            res++;
+        }
+        
+        if(sum==n-res) return res;
+        else return res-1;
+        
+    }
+}
