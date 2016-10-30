@@ -1,0 +1,49 @@
+public class Solution {
+    public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
+        int n=nums.length;
+        int index=0;
+        if(a>0){
+            index=n-1;
+        }else{
+            index=0;
+        }
+        
+        int i=0; 
+        int j=n-1;
+        int[] res = new int[n];
+        
+        while(i<=j){
+            int val1=getValue(nums[i], a, b, c);
+            int val2=getValue(nums[j], a, b,c);
+            if(a>0){
+                
+                if(val1 > val2){
+                    res[index] = val1;
+                    i++;
+                }else{
+                    res[index]=val2;
+                    j--;
+                } 
+                index--;
+                
+            }else{
+                
+                if(val1 > val2){
+                    res[index] = val2;
+                    j--;
+                }else{
+                    res[index]=val1;
+                    i++;
+                } 
+                index++;
+            }
+        }
+        
+        return res;
+        
+    }
+    
+    public int getValue(int x, int a, int b, int c){
+        return a*x*x+b*x+c;
+    }
+}
