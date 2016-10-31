@@ -1,0 +1,79 @@
+public class Solution {
+    
+    // two pointer solution
+    public ListNode plusOne(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode i=dummy;
+        ListNode j=dummy;
+        
+        while(j.next!=null){
+            j=j.next;
+            if(j.val!=9){
+                i=j;
+            }
+        }
+        
+        if(j.val!=9){
+            j.val++;
+        }else{
+            i.val++;
+            i=i.next;
+            while(i!=null){
+                i.val=0;
+                i=i.next;
+            }
+        }
+        if(dummy.val == 0){
+            return head;
+        }else{
+            return dummy;
+        }
+    }
+    
+    // reverse and reverse back solution
+    /*public ListNode plusOne(ListNode head) {
+        head = reverse(head);
+        ListNode curr = head;
+        
+        int carry=1;
+        
+        while(curr!=null){
+            if(curr.val==9){
+                curr.val=0;
+                curr = curr.next;
+                carry=1;
+            }else{
+                curr.val+=1;
+                carry=0;
+                break;
+            }
+        }
+        
+        head = reverse(head);
+        
+        if(carry==1){
+            ListNode newNode = new ListNode(1);
+            newNode.next=head;
+            return newNode;
+        }else{
+            return head;
+        }
+        
+        
+    }
+    public ListNode reverse(ListNode head){
+        //reverse the original list
+        ListNode pre = null;
+        while(head!=null){
+            ListNode temp = head.next;
+            head.next = pre;
+            pre = head;
+            head = temp;
+        }
+        
+        return pre;
+    }*/
+    
+    
+}
