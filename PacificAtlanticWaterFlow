@@ -1,0 +1,55 @@
+public class Solution {
+    public List<int[]> pacificAtlantic(int[][] matrix) {
+
+        List<int[]> list = new ArrayList<int[]>();
+        
+        if(matrix==null || matrix.length==0 || matrix[0].length == 0){
+            return list;
+        }
+        
+        int m=matrix.length;
+        int n=matrix[0].length;
+        
+        boolean[][] p = new boolean[m][n];
+        boolean[][] a = new boolean[m][n];
+        
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                p[i][j]=false;
+                a[i][j]=false;
+            }
+        }
+        
+        for(int i=0; i<m; i++){
+            dfs(matrix, p, i, 0, Integer.MIN_VALUE);
+            dfs(matrix, a, i, n-1, Integer.MIN_VALUE);
+        }
+        
+        for(int i=0; i<n; i++){
+            dfs(matrix, p, 0, i, Integer.MIN_VALUE);
+            dfs(matrix, a, m-1, i, Integer.MIN_VALUE);
+        }
+        
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(p[i][j] && a[i][j]){
+                    int[] ele = {i, j};
+                    list.add(ele);
+                }
+            }
+        }
+        return list;
+    }
+    
+    public void dfs(int[][] matrix, boolean[][] visited, int i, int j, int value){
+        if(i<0 || j<0 || i>=matrix.length || j>=matrix[0].length || visited[i][j] || value > matrix[i][j]) return;
+        
+        visited[i][j] = true;
+        
+        dfs(matrix, visited, i-1, j, matrix[i][j]);
+        dfs(matrix, visited, i, j-1, matrix[i][j]);
+        dfs(matrix, visited, i, j+1, matrix[i][j]);
+        dfs(matrix, visited, i+1, j, matrix[i][j]);
+    }
+    
+}
