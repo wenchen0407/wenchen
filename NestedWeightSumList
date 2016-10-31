@@ -1,0 +1,21 @@
+public class Solution {
+
+    public int depthSum(List<NestedInteger> nestedList) {
+        
+        return helper(1, nestedList);
+    }
+    
+    public int helper(int depth, List<NestedInteger> nestedList){
+        int sum=0;
+        for(int i=0; i<nestedList.size(); i++){
+            NestedInteger item = nestedList.get(i);
+            
+            if(item.isInteger()){
+                sum+=depth*item.getInteger();
+            }else{
+                sum+=helper(depth+1, item.getList());
+            }
+        }
+        return sum;
+    }
+}
