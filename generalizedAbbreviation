@@ -1,0 +1,31 @@
+public class Solution {
+    
+    //  The idea is: for every character, we can keep it or abbreviate it. 
+        To keep it, we add it to the current solution and carry on backtracking. 
+        To abbreviate it, we omit it in the current solution, but increment the count, which indicates how many characters have we abbreviated. 
+        When we reach the end or need to put a character in the current solution, and count is bigger than zero, we add the number into the solution.
+    
+    public List<String> generateAbbreviations(String word) {
+        List<String> res = new ArrayList<String>();
+        
+        helper(res, word, "", 0, 0);
+        
+        return res;
+    }
+    
+    public void helper(List<String> res, String word, String str, int abbr, int index){
+        if(index==word.length()){
+            if(abbr>0) str+=abbr;
+            res.add(str);
+        }else{
+            // choose to continue abbreviate 
+            helper(res, word, str, abbr+1, index+1);
+            // choose to not abbreviate
+            String newstr = "";
+            if(abbr>0) newstr= str+abbr+word.charAt(index);
+            else newstr = str+word.charAt(index);
+            helper(res, word, newstr, 0, index+1);
+        }
+        
+    }
+}
