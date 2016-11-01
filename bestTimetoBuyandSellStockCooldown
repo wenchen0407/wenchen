@@ -1,0 +1,16 @@
+public class Solution {
+    public int maxProfit(int[] prices) {
+        int sell=0;
+        int pre_sell=0;
+        int buy=Integer.MIN_VALUE;
+        int pre_buy=Integer.MIN_VALUE;
+        
+        for(int i=0; i<prices.length; i++){
+            pre_buy=buy;
+            buy=Math.max(pre_sell-prices[i], pre_buy);
+            pre_sell=sell;
+            sell=Math.max(pre_buy+prices[i], pre_sell);
+        }
+        return sell;
+    }
+}
