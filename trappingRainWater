@@ -1,0 +1,37 @@
+public class Solution {
+    public int trap(int[] height) {
+        if(height==null || height.length<=2) return 0;
+        
+        //The main idea is : if we want to find out how much water on a bar(bot), we need to find out the left larger bar's index (il), and right larger bar's index(ir), 
+         // so that the water is (min(A[il],A[ir])-A[bot])*(ir-il-1), use min since only the lower boundary can hold water, and we also need to handle the edge case that there is no il.
+
+        //To implement this we use a stack that store the indices with decreasing bar height, once we find a bar who's height is larger, then let the top of the stack be bot, the cur bar is ir, and the previous bar is il.
+        
+        Stack<Integer> stack = new Stack<Integer>();
+        
+        int i=0;
+        int res=0;
+        while(i<height.length){
+            
+            int curr=height[i];
+            
+            if(stack.size()==0 || curr <= height[stack.peek()]){
+                stack.push(i);
+                i++;
+            }else{
+                
+                int low = stack.pop();
+                
+                if(stack.size()>0){
+                    int pre_peek=stack.peek();
+                    res += (Math.min(curr,height[pre_peek])-height[low])*(i-pre_peek-1);
+                }
+                
+            }
+            
+        }
+        
+        return res;
+        
+    }
+}
