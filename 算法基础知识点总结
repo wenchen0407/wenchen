@@ -1,0 +1,251 @@
+Inorder tree traversal
+
+recursive:
+
+public void inorder(TreeNode root){
+	if(root==null) return;
+	
+	inorder(root.left);
+	
+	System.out.println(root.val);
+
+	inorder(root.right);
+}
+
+iterative:
+
+public void inorder(TreeNode root){
+	if(root==null) return;
+
+	Stack<TreeNode> stack = new Stack<TreeNode>();
+	// push all left nodes to stack
+	while(node!=null){
+		stack.push(node);
+		node =node.left;
+}
+
+while(stack.size()>0){
+	TreeNode node = stack.pop();
+	System.out.println(node.val+” ”);
+	node = node.right;
+	while(node!=null){
+		stack.push(node);
+		node=node.left;
+}
+}
+}
+
+Preorder traversal:
+public void preorder(TreeNode root){
+	if(root==null) return;
+
+	System.out.println(root.val);
+
+	preorder(root.left);
+
+	preorder(root.right);
+}
+
+public void preorder(TreeNode root){
+	if(root==null) return;
+
+	Stack<TreeNode> stack = new Stack<TreeNode>();
+
+	stack.push(root);
+
+	while(stack.size()>0){
+		TreeNode node = stack.pop();
+		System.out.println(node.val+” ”);
+		
+		if(node.right!=null) stack.push(node.right);
+		if(node.left!=null) stack.push(node.left);
+}
+
+}
+
+
+public void postorder(TreeNode root){
+	if(root==null) return;
+
+	postorder(root.left);
+
+	postorder(root.right);
+
+	System.out.println(root.val);
+}
+
+public void postorder(TreeNode root){
+	if(root==null) return;
+
+	Stack<TreeNode> stack = new Stack<TreeNode>();
+	Stack<TreeNode> output = new Stack<TreeNode>();
+
+	stack.push(root);
+
+	while(stack.size()>0){
+		TreeNode node = stack.pop();
+		output.push(node);
+		if(node.left!=null) stack.push(node.left);
+		if(node.right!=null) stack.push(node.right);
+}
+
+while(output.size()>0){
+	System.out.println(output.pop().val+” ”);
+}
+
+}
+
+
+public void mergeSort(int[] array, int low, int high){
+	int mid = low+(high-low)/2;
+	mergeSort(array, low, mid);
+	mergeSort(array, mid+1, high);
+	merge(array, low, mid, high);
+}
+
+public void merge(int[] array, int low, int mid, int high){
+	int begin1=low;
+	int begin2=mid+1;
+	int[] arr = new int[array.length];
+	
+	for(int i=low; i<=high; i++){
+		arr[i]=array[i];
+}
+
+	int curr=low;
+	while(begin1<= mid && begin2 <=high){
+		if(arr[begin1] < arr[begin2]){
+			array[curr]=arr[begin1];
+			curr++;
+			begin1++;
+}else{
+	array[curr]=arr[begin2];
+	curr++;
+	begin2++;
+}
+}
+
+while(begin1 <=mid){
+	array[curr]=arr[begin1];
+	curr++;
+	begin1++;
+}
+
+}
+
+
+
+
+
+
+QuickSort:
+
+
+public void quickSort(int[] arr, int left, int right){
+int index = partition(arr, left, right);
+quicksort(arr, left, index-1);
+quicksort(arr, index+1, right);
+}
+
+public int partition(int[] arr, int left, int right) {
+int pivot = arr[right];
+int small = 0;
+for(int i = 0; i < arr.length; i++) {
+	if(arr[i] < pivot) {
+		swap(arr, small, i);
+		small++;
+	}	
+}
+swap(arr, small, pivot);
+return small;
+}
+
+
+binary search recursive:
+
+public int binarySearch(int[] arr, int low, int high, int target){
+	if(low>high) return -1;
+	int mid = low+(high-low)/2;
+	if(arr[mid]<target) return binarySearch(arr, mid+1, high, target);
+	else if(arr[mid]>target) return binarySearch(arr, low, mid-1, target);
+	else return mid;
+}
+
+public int binarySearch(int[] arr, int target){
+	int low=0;
+	int high=arr.length-1;
+	int mid = low+(high-low)/2;
+
+	while(low <=high){
+		if(arr[mid]<target)low=mid+1;
+		else if(arr[mid]>target) high=mid-1;
+		else return mid;
+}
+return -1;
+}
+
+
+
+
+class Stack{
+	Node top;
+	
+	public Stack(){
+		this.top=null;
+}
+
+	public void push(Object item){
+		Node newNode = new Node(item);
+	newNode.next=top;
+	top=newNode;
+
+	
+}
+
+public Object pop(){	
+	if(top!=null){
+		Node res = top;
+top=top.next;
+return res.data;	
+} 
+
+	return null;
+}
+
+public Node peek(){
+	return top.data;
+}
+
+}
+
+class Queue{
+	Node head;
+	Node tail;
+	
+	public Queue(){
+		head=null;
+		head=tail;
+}
+
+public void enqueue(Object item){
+	Node newNode = new Node(item);
+	if(tail==null){
+		tail=newNode;
+		head=tail;
+}else{
+	tail.next=newNode;
+	tail=tail.next;
+}
+}
+
+public Object dequeue(){
+	if(first!=null){
+		Object res = first.data;
+		first=first.next;
+		return res;
+}
+return null;
+}
+
+
+}
