@@ -1,0 +1,92 @@
+/*public class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        
+        // calculate the minimum number of invalid parenthese
+        // dfs process could have duplicate results, so that we need to use set of get unique results
+        int l=0;
+        int r=0;
+        
+        for(char c: s.toCharArray()){
+            if(c=='('){
+                l++;   
+            }else if(c==')'){
+                if(l!=0){
+                    l--;
+                }else{
+                    r++;
+                }
+            }
+        }
+        
+        Set<String> set = new HashSet<String>();
+        
+        dfs(set, s, 0, "", l, r, 0);
+        
+        return new ArrayList<String>(set);
+    }
+    
+    public void dfs(Set<String> res, String s, int i, String str, int l, int r, int open){
+        if(l<0 || r<0 || open<0) return;
+        
+        if(i == s.length()){
+            if(l==0 && r==0 && open==0){
+                res.add(str);
+            }
+            return;
+        }
+        
+        char c = s.charAt(i);
+        String temp = str;
+        if(c == '('){
+            dfs(res, s, i+1, temp+'(', l, r, open+1); // not removing '('
+            dfs(res, s, i+1, temp, l-1, r, open);  // removing '('
+        }else if(c == ')'){
+            dfs(res, s, i+1, temp+')', l, r, open-1); // not removing ')'
+            dfs(res, s, i+1, temp, l, r-1, open); // removing ')'
+        }else{
+            dfs(res, s, i+1, temp+c, l, r, open);
+        }
+        
+        
+    }
+}*/
+
+public class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        // do not need set to filter out duplicate results
+        // find the prefix that the # of left parentheses is greater than the # of right parentheses
+        
+        List<String> res = new ArrayList<String>();
+        dfs(res, s, 0, 0, new char[]{'(', ')'});
+        return res;
+    }
+    
+    public void dfs(List<String> res, String s, int i_last, int j_last, char[] par_arr){
+        int counter=0;
+        for(int i=i_last; i<s.length(); i++){
+            if(s.charAt(i)==par_arr[0]) counter++;
+            if(s.charAt(i)==par_arr[1]) counter--;
+            if(counter < 0){
+                for(int j=j_last; j<=i; j++){
+                    if(s.charAt(j)==par_arr[1] && (j==j_last || s.charAt(j-1)!=par_arr[1]))
+                        dfs(res, s.substring(0, j)+s.substring(j+1, s.length()), i, j, par_arr);
+                }
+                return;
+            }
+        }
+        
+        if(counter ==0 && par_arr[0]=='('){
+            res.add(s);
+            return;
+        }else{
+            String reversed_str = new StringBuilder(s).reverse().toString();
+            if(par_arr[0]=='('){
+                // finish scan left to right 
+                dfs(res, reversed_str, 0, 0, new char[]{')', '('});
+            }else{
+                // finsh scan right to left
+                res.add(reversed_str);
+            }
+        }
+    }
+}
