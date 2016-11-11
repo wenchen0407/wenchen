@@ -1,0 +1,41 @@
+public class Solution {
+    //I	V	X	L	C	D	M
+    public int romanToInt(String s) {
+        Map<Character, Integer> map = new HashMap<Character, Integer>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+        
+        char[] charArr = s.toCharArray();
+        int n=s.length();
+        int res=0;
+        int i=0;
+        while(i<n){
+            char c = charArr[i];
+            int value = map.get(c);
+            if(c=='I'){
+                if(i+1 < n && charArr[i+1]=='V') res-=value;
+                else if(i+1 < n && charArr[i+1]=='X') res-=value;
+                else res+=value;
+            }else if(c=='X'){
+                if(i+1 < n && charArr[i+1]=='L') res-=value;
+                else if(i+1 < n && charArr[i+1]=='C') res-=value;
+                else res+=value;
+            }else if(c == 'C'){
+                if(i+1 < n && charArr[i+1]=='D') res-=value;
+                else if(i+1 < n && charArr[i+1]=='M') res-=value;
+                else res+=value;
+            }else{
+                res+=value;
+            }
+            
+            i++;
+        }
+        
+        return res;
+    }
+}
