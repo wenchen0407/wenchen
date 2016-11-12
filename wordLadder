@@ -1,0 +1,40 @@
+public class Solution {
+    public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
+        // breath first search
+        
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(beginWord);
+        
+        Set<String> visited = new HashSet<String>();
+        visited.add(beginWord);
+        int res = 1;
+        while(queue.size() >0 ){
+            int size = queue.size();
+            
+            for(int i=0; i<size; i++){
+                StringBuilder str = new StringBuilder(queue.poll());
+                // modify str by 1 char
+                for(int j=0; j<str.length(); j++){
+                    char curr = str.charAt(j);
+                    for(int k=0; k<26; k++){
+                        str.setCharAt(j, (char)(k+'a'));
+                        String temp = str.toString();
+                        if(temp.equals(endWord)) {
+                            res++;
+                            return res;
+                        }else if(!visited.contains(temp) && wordList.contains(temp)){
+                            queue.offer(temp);
+                            visited.add(temp);
+                            
+                        }
+                    }
+                    // set string back
+                    str.setCharAt(j, curr);
+                }
+            }
+            
+            res++;
+        }
+        return 0;
+    }
+}
