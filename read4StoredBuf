@@ -1,0 +1,34 @@
+public class Solution extends Reader4 {
+    /**
+     * @param buf Destination buffer
+     * @param n   Maximum number of characters to read
+     * @return    The number of characters read
+     */
+    char[] stored_buf=new char[4];
+    int start=0;
+    int end=0;
+    
+    public int read(char[] buf, int n) {
+        int res = 0;
+        
+        while(res < n){
+            
+            for(int i=start; i<end; i++){
+                buf[res] = stored_buf[i];
+                res++;
+                if(res>=n){
+                    start=i+1;
+                    return res;
+                }
+            }
+            
+            int len = read4(stored_buf);
+            start=0;
+            end=len;
+            
+            if(len==0) return res;
+            
+        }
+        return res;
+    }
+}
