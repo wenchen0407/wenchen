@@ -1,0 +1,46 @@
+public class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        // check whether there is cycle and check whether all vetices are connected
+        // Any connected graph without simple cycles is a tree.
+        
+        List<List<Integer>> graph = new ArrayList<List<Integer>>();
+        boolean[] visited = new boolean[n];
+        
+        for(int i=0; i<n; i++){
+            List<Integer> list = new ArrayList<Integer>();
+            graph.add(list);
+        }
+        
+        for(int[] edge: edges){
+            int u = edge[0];
+            int v = edge[1];
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+        
+        // check cycles
+        if(hasCycles(graph, 0, visited, -1)){
+            return false;
+        }
+        
+        // check connections
+        for(int i=0; i<n; i++){
+            if(!visited[i]) return false;
+        }
+        return true;
+    }
+    
+    boolean hasCycles(List<List<Integer>> graph, int curr, boolean[] visited, int parent){
+        visited[curr] = true;
+        
+        for(int i=0; i<graph.get(curr).size(); i++){
+            int child = graph.get(curr).get(i);
+            
+            if((visited[child]&& child!=parent) || (!visited[child] && hasCycles(graph, child, visited, curr))){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+}
