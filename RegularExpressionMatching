@@ -17,7 +17,7 @@ public class Solution {
         // case1 : dp[i][j] = dp[i-1][j-1], when s[i] == p[j] || p[j] == '.'
         
         // case2: dp[i][j] = dp[i][j-2] -> 0 occurrence
-        //        dp[i][j] = dp[i-1][j] if s[i] == p[j-1] || p[j-1] = '.'
+        //        dp[i][j] = dp[i-1][j] if s[i] == p[j-1] || p[j-1] = '.' -> 1/more occurrence
         
         boolean[][] dp = new boolean[s.length()+1][p.length()+1];
         dp[0][0] = true;
