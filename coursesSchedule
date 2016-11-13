@@ -1,0 +1,50 @@
+public class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        
+        Map<Integer, Set<Integer>> map = new HashMap<Integer, Set<Integer>>();
+        Map<Integer, Integer> indegree = new HashMap<Integer, Integer>();
+        
+        for(int i=0; i<numCourses; i++){
+            indegree.put(i, 0);
+            map.put(i, new HashSet<Integer>());
+        }
+        
+        // if there is a cycle in the graph, then there is no result 
+        for(int[] item: prerequisites){
+            if(!map.get(item[1]).contains(item[0])){
+                indegree.put(item[0], indegree.get(item[0])+1);
+            }
+            Set<Integer> set = map.get(item[1]);
+            set.add(item[0]);
+            map.put(item[1], set);
+        }
+        
+        Queue<Integer> q = new LinkedList<Integer>();
+        int[] res = new int[numCourses];
+        int count=0;
+        
+        for(int i=0; i<numCourses; i++){
+            if(indegree.get(i) == 0) q.offer(i);
+        }
+        
+        if(q.size() == 0) return new int[0];
+        
+        while(q.size() > 0){
+            int curr = q.poll();
+            res[count++] = curr; 
+            
+            Set<Integer> dep_set = map.get(curr);
+            
+            for(int d: dep_set){
+                int newvalue = indegree.get(d)-1;
+                indegree.put(d, newvalue);
+                if(newvalue <0 ) return new int[0]; 
+                else if(newvalue == 0) q.offer(d);
+            }
+        }
+        
+        if(count != numCourses) return new int[0];
+        
+        return res;
+    }
+}
