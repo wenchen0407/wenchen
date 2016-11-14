@@ -1,0 +1,26 @@
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if(root == null) return;
+        Queue<TreeLinkNode> queue = new LinkedList<TreeLinkNode>();
+        queue.offer(root);
+        while(queue.size() > 0) {
+            int qsize = queue.size();
+            TreeLinkNode prev = null;
+            for(int i = 0; i < qsize; i++) {
+                TreeLinkNode pop = queue.poll();
+                if(prev == null) {
+                    prev = pop;
+                } else {
+                    prev.next = pop;
+                    prev = pop;
+                }
+                if(prev.left != null) {
+                    queue.offer(prev.left);
+                }
+                if(prev.right != null) {
+                    queue.offer(prev.right);
+                }
+            }
+        }
+    }
+}
