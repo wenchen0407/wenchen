@@ -1,0 +1,65 @@
+public class Solution {
+        
+        public int[][] multiply(int[][] A, int[][] B) {
+        //sparse complex solution:
+        // A sparse matrix can be represented as a sequence of rows, 
+        // each row is a sequence of (column-number, value) pairs of the nonzero values in the row.
+        int arow = A.length;
+        int acol = A[0].length;
+        int brow = B.length;
+        int bcol = B[0].length;
+        
+        int[][] res = new int[arow][bcol];
+        
+        // create a non-zero list
+        List<List<Integer>> Anonzero = new ArrayList<List<Integer>>();
+        for(int i=0; i<arow; i++){
+            List<Integer> row_list = new ArrayList<Integer>();
+            for(int j=0; j<acol; j++){
+                if(A[i][j]!=0){
+                    row_list.add(j);
+                    row_list.add(A[i][j]);
+                }
+            }
+            Anonzero.add(row_list);
+        }
+        
+        for(int i=0; i<arow; i++){
+            List<Integer> row_list = Anonzero.get(i);
+            for(int m =0; m<row_list.size()-1; m += 2){
+                int Acol = row_list.get(m);
+                int Aval = row_list.get(m+1);
+
+                for(int j = 0; j<bcol; j++){
+                    if(B[Acol][j]!=0)
+                        res[i][j] += Aval*B[Acol][j];
+                }
+            }
+        }
+        
+        return res;
+        
+        
+        // sparse consice solution
+        /*int arow = A.length;
+        int acol = A[0].length;
+        int brow = B.length;
+        int bcol = B[0].length;
+        
+        int[][] res = new int[arow][bcol];
+        
+        for(int i=0; i<arow; i++){
+            for(int j=0; j<acol; j++){
+                if(A[i][j]!=0){
+                    for(int m=0; m<bcol; m++){
+                        if(B[j][m]!=0){
+                            res[i][m]+=A[i][j]*B[j][m];
+                        }
+                    }
+                }
+            }
+        }
+        
+        return res;*/
+    }
+}
